@@ -1,11 +1,11 @@
 [Route("api/[controller]")]
 [ApiController]
-public class ReceptionistsController : ControllerBase
+public class ReceptionistController : ControllerBase
 {
     private readonly IChambreRepository _chambreRepository;
     private readonly IReservationRepository _reservationRepository;
 
-    public ReceptionistsController(IChambreRepository chambreRepository, IReservationRepository reservationRepository)
+    public ReceptionistController(IChambreRepository chambreRepository, IReservationRepository reservationRepository)
     {
         _chambreRepository = chambreRepository;
         _reservationRepository = reservationRepository;
