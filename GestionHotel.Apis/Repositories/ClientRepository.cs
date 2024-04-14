@@ -7,23 +7,23 @@ public class ClientRepository : IClientRepository
         _context = context;
     }
 
-    public async Task<Client> GetByIdAsync(int id)
+    public async Task<ClientModel> GetByIdAsync(int id)
     {
         return await _context.Clients.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Client>> GetAllAsync()
+    public async Task<IEnumerable<ClientModel>> GetAllAsync()
     {
         return await _context.Clients.ToListAsync();
     }
 
-    public async Task AddAsync(Client client)
+    public async Task AddAsync(ClientModel client)
     {
         _context.Clients.Add(client);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Client client)
+    public async Task UpdateAsync(ClientModel client)
     {
         _context.Clients.Update(client);
         await _context.SaveChangesAsync();

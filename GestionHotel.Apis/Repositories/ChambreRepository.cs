@@ -7,23 +7,28 @@ public class ChambreRepository : IChambreRepository
         _context = context;
     }
 
-    public async Task<Chambre> GetByIdAsync(int id)
+    public async Task<IEnumerable<ChambreModel>> GetChambresDisponiblesAsync(DateTime dateDebut, DateTime dateFin)
+    {
+        // Logique pour obtenir les chambres disponibles pour les dates spécifiées
+    }
+
+    public async Task<ChambreModel> GetByIdAsync(int id)
     {
         return await _context.Chambres.FindAsync(id);
     }
 
-    public async Task<IEnumerable<Chambre>> GetAllAsync()
+    public async Task<IEnumerable<ChambreModel>> GetAllAsync()
     {
         return await _context.Chambres.ToListAsync();
     }
 
-    public async Task AddAsync(Chambre chambre)
+    public async Task AddAsync(ChambreModel chambre)
     {
         _context.Chambres.Add(chambre);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Chambre chambre)
+    public async Task UpdateAsync(ChambreModel chambre)
     {
         _context.Chambres.Update(chambre);
         await _context.SaveChangesAsync();

@@ -1,8 +1,8 @@
 public interface IChambreRepository
 {
-    Task<Chambre> GetByIdAsync(int id);
-    Task<IEnumerable<Chambre>> GetAllAsync();
-    Task AddAsync(Chambre chambre);
-    Task UpdateAsync(Chambre chambre);
+    Task<ChambreRepository> GetByIdAsync(int id);
+    Task<IEnumerable<ChambreRepository>> GetAllAsync();
+    Task AddAsync(ChambreRepository chambre);
+    Task UpdateAsync(ChambreRepository chambre);
     Task DeleteAsync(int id);
 }

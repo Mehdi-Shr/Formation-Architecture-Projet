@@ -1,4 +1,6 @@
-public class MenageController : BaseController
+[Route("api/[controller]")]
+[ApiController]
+public class MenageController : ControllerBase
 {
     private readonly IChambreRepository _chambreRepository;
 
@@ -7,24 +9,16 @@ public class MenageController : BaseController
         _chambreRepository = chambreRepository;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetChambresANettoyer()
+    [HttpGet("chambres-a-nettoyer")]
+    public async Task<ActionResult<IEnumerable<ChambreModel>>> GetChambresANettoyer()
     {
-        var chambres = await _chambreRepository.GetChambresANettoyer();
-        return Ok(chambres);
+        // Logique pour obtenir les chambres à nettoyer
     }
 
-    [HttpPost]
-    public async Task<IActionResult> MarquerChambreCommeNettoyee(int chambreId)
+    [HttpPut("marquer-nettoyage")]
+    public async Task<IActionResult> MarquerNettoyage(int idChambre)
     {
-        var chambre = await _chambreRepository.GetByIdAsync(chambreId);
-        if (chambre == null)
-            return NotFound();
-
-        await _chambreRepository.MarquerChambreCommeNettoyee(chambre);
-
-        return Ok();
+        // Logique pour marquer une chambre comme nettoyée
     }
 
-    // ... autres actions (optionnelles)
 }

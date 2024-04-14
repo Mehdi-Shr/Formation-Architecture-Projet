@@ -1,26 +1,20 @@
-public class Reservation
+public class ReservationModel
 {
-    public int Id { get; set; }
+    public int Id { get; private set; }
+    public ClientModel Client { get; private set; }
+    public ChambreModel Chambre { get; private set; }
+    public DateTime DateDebut { get; private set; }
+    public DateTime DateFin { get; private set; }
+    public bool EstAnnulee { get; private set; }
 
-    public int ClientId { get; set; }
-
-    public int ChambreId { get; set; }
-
-    public DateTime DateDebut { get; set; }
-
-    public DateTime DateFin { get; set; }
-
-    public int Montant { get; set; }
-
-    public string PaiementId { get; set; }
-
-    public Client Client { get; set; }
-
-    public Chambre Chambre { get; set; }
-
-    public bool EstAnnulableAvecRemboursement()
-    {
-        // TODO: Implémenter la logique de vérification de l'annulation avec remboursement
-        return true;
+    public ReservationModel(int id, ClientModel client, ChambreModel chambre, DateTime dateDebut, DateTime dateFin) {
+        Id = id;
+        Client = client;
+        Chambre = chambre;
+        DateDebut = dateDebut;
+        DateFin = dateFin;
+        EstAnnulee = false; // Par défaut, une réservation n'est pas annulée
     }
+
+    // Méthodes pour annuler la réservation, calculer les frais, etc.
 }

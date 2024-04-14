@@ -1,11 +1,11 @@
 public interface IReservationRepository
 {
-    Task<Reservation> GetByIdAsync(int id);
-    Task<IEnumerable<Reservation>> GetAllAsync();
-    Task AddAsync(Reservation reservation);
-    Task UpdateAsync(Reservation reservation);
+    Task<ReservationRepository> GetByIdAsync(int id);
+    Task<IEnumerable<ReservationRepository>> GetAllAsync();
+    Task AddAsync(ReservationRepository reservation);
+    Task UpdateAsync(ReservationRepository reservation);
     Task DeleteAsync(int id);
-    Task<IEnumerable<Reservation>> GetReservationsByClientId(int clientId);
-    Task<IEnumerable<Reservation>> GetReservationsByChambreId(int chambreId);
+    Task<IEnumerable<ReservationRepository>> GetReservationsByClientId(int clientId);
+    Task<IEnumerable<ReservationRepository>> GetReservationsByChambreId(int chambreId);
     Task<bool> AnnulerReservationAsync(int reservationId);
 }

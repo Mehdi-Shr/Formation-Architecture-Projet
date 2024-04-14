@@ -7,23 +7,33 @@ public class ReservationRepository : IReservationRepository
         _context = context;
     }
 
-    public async Task<Reservation> GetByIdAsync(int id)
-    {
-        return await _context.Reservations.FindAsync(id);
-    }
-
-    public async Task<IEnumerable<Reservation>> GetAllAsync()
+    public async Task<IEnumerable<ReservationModel>> GetReservationsAsync()
     {
         return await _context.Reservations.ToListAsync();
     }
 
-    public async Task AddAsync(Reservation reservation)
+    public async Task<ReservationModel> GetByIdAsync(int id)
+    {
+        return await _context.Reservations.FindAsync(id);
+    }
+
+    public async Task<IEnumerable<ReservationModel>> GetReservationsByClientIdAsync(int clientId)
+    {
+        return await _context.Reservations.Where(r => r.ClientId == clientId).ToListAsync();
+    }
+
+    public async Task<IEnumerable<ReservationModel>> GetReservationsByChambreIdAsync(int chambreId)
+    {
+        return await _context.Reservations.Where(r => r.ChambreId == chambreId).ToListAsync();
+    }
+
+    public async Task AddAsync(ReservationModel reservation)
     {
         _context.Reservations.Add(reservation);
         await _context.SaveChangesAsync();
     }
 
-    public async Task UpdateAsync(Reservation reservation)
+    public async Task UpdateAsync(ReservationModel reservation)
     {
         _context.Reservations.Update(reservation);
         await _context.SaveChangesAsync();
@@ -39,25 +49,8 @@ public class ReservationRepository : IReservationRepository
         }
     }
 
-    public async Task<IEnumerable<Reservation>> GetReservationsByClientId(int clientId)
+    public async Task<bool> AnnulerReservationAsync(int reservationId, bool remboursement)
     {
-        return await _context.Reservations.Where(r => r.ClientId == clientId).ToListAsync();
-    }
-
-    public async Task<IEnumerable<Reservation>> GetReservationsByChambreId(int chambreId)
-    {
-        return await _context.Reservations.Where(r => r.ChambreId == chambreId).ToListAsync();
-    }
-
-    public async Task<bool> AnnulerReservationAsync(int reservationId)
-    {
-        var reservation = await _context.Reservations.FindAsync(reservationId);
-        if (reservation != null)
-        {
-            // TODO: Implémenter la logique d'annulation de la réservation
-            return true;
-        }
-
-        return false;
+        // Logique pour annuler la réservation avec gestion de remboursement
     }
 }

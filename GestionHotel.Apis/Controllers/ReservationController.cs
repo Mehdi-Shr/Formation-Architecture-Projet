@@ -1,91 +1,24 @@
-public class ReservationController : BaseController
+[Route("api/[controller]")]
+[ApiController]
+public class ReservationController : ControllerBase
 {
-    private readonly IReservationRepository _reservationRepository;
+    private readonly IChambreRepository _chambreRepository;
 
-    public ReservationController(IReservationRepository reservationRepository)
+    public ReservationController(IChambreRepository chambreRepository)
     {
-        _reservationRepository = reservationRepository;
+        _chambreRepository = chambreRepository;
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetById(int id)
+    [HttpGet("chambres-a-nettoyer")]
+    public async Task<ActionResult<IEnumerable<ChambreModel>>> GetChambresANettoyer()
     {
-        var reservation = await _reservationRepository.GetByIdAsync(id);
-        if (reservation == null)
-            return NotFound();
-
-        return Ok(reservation);
+        // Logique pour obtenir les chambres à nettoyer
     }
 
-    [HttpGet]
-    public async Task<IActionResult> GetAll()
+    [HttpPut("marquer-nettoyage")]
+    public async Task<IActionResult> MarquerNettoyage(int idChambre)
     {
-        var reservations = await _reservationRepository.GetAllAsync();
-        return Ok(reservations);
+        // Logique pour marquer une chambre comme nettoyée
     }
 
-    [HttpPost]
-    public async Task<IActionResult> Create([FromBody] Reservation reservation)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        await _reservationRepository.AddAsync(reservation);
-
-        return CreatedAtAction(nameof(GetById), new { id = reservation.Id }, reservation);
-    }
-
-    [HttpPut]
-    public async Task<IActionResult> Update([FromBody] Reservation reservation)
-    {
-        if (!ModelState.IsValid)
-            return BadRequest(ModelState);
-
-        var existingReservation = await _reservationRepository.GetByIdAsync(reservation.Id);
-        if (existingReservation == null)
-            return NotFound();
-
-        await _reservationRepository.UpdateAsync(reservation);
-
-        return Ok(reservation);
-    }
-
-    public async Task<IActionResult> Delete(int id)
-{
-    var reservation = await _reservationRepository.GetByIdAsync(id);
-    if (reservation == null)
-        return NotFound();
-
-    await _reservationRepository.DeleteAsync(id);
-
-    return NoContent();
-}
-
-[HttpGet]
-public async Task<IActionResult> GetByClientId(int clientId)
-{
-    var reservations = await _reservationRepository.GetReservationsByClientId(clientId);
-    return Ok(reservations);
-}
-
-[HttpGet]
-public async Task<IActionResult> GetByChambreId(int chambreId)
-{
-    var reservations = await _reservationRepository.GetReservationsByChambreId(chambreId);
-    return Ok(reservations);
-}
-
-[HttpPost]
-public async Task<IActionResult> AnnulerReservation(int reservationId)
-{
-    var reservation = await _reservationRepository.GetByIdAsync(reservationId);
-    if (reservation == null)
-        return NotFound();
-
-    if (!reservation.EstAnnulableAvecRemboursement())
-        return BadRequest("La réservation ne peut pas être annulée avec remboursement.");
-
-    await _reservationRepository.AnnulerReservationAsync(reservationId);
-
-    return Ok();
 }
